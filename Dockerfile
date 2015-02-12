@@ -93,21 +93,3 @@ ONBUILD RUN \
   mkdir -p ./.git/objects && \
   echo "$(git rev-parse HEAD)" > ./build-info.txt && \
   rm -rf ./.git
-
-# Remove packages
-ONBUILD RUN apt-get -y purge \
-  build-essential \
-  daemontools \
-  git \
-  libcurl4-openssl-dev \
-  libffi-dev \
-  libreadline6-dev \
-  libssl-dev \
-  libxml2-dev \
-  libxslt1-dev \
-  libyaml-dev \
-  python \
-  python-dev \
-  python-pip \
-  python-software-properties \
-  python-virtualenv
