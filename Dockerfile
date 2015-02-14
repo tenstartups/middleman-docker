@@ -20,6 +20,7 @@ RUN apt-get -y install \
   curl \
   daemontools \
   git \
+  imagemagick \
   libcurl4-openssl-dev \
   libffi-dev \
   libreadline6-dev \
