@@ -12,6 +12,7 @@ MAINTAINER Marc Lennox <marc.lennox@gmail.com>
 # Set environment.
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM xterm-color
+ENV HOME /home/middleman
 
 # Install base packages.
 RUN apt-get update
