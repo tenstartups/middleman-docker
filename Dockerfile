@@ -12,7 +12,6 @@ MAINTAINER Marc Lennox <marc.lennox@gmail.com>
 # Set environment.
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM xterm-color
-ENV HOME /home/middleman
 
 # Install base packages.
 RUN apt-get update
@@ -78,10 +77,16 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # Define working directory.
 WORKDIR /usr/src/web
 
+# Define mountable directories.
+VOLUME ["/var/www/website"]
+
+# Expose ports.
+EXPOSE 4567
+
 # Copy the Gemfile into place and bundle.
 ONBUILD ADD Gemfile /usr/src/web/Gemfile
 ONBUILD ADD Gemfile.lock /usr/src/web/Gemfile.lock
-ONBUILD RUN echo "gem: --no-ri --no-rdoc" > ${HOME}/.gemrc
+ONBUILD RUN echo "gem: --no-ri --no-rdoc" > .gemrc
 ONBUILD RUN bundle install --deployment
 
 # Copy the rest of the application into place.
