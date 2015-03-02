@@ -22,7 +22,6 @@ RUN apt-get -y install \
   git \
   imagemagick \
   libcurl4-openssl-dev \
-  libffi-dev \
   libreadline6-dev \
   libssl-dev \
   libxml2-dev \
@@ -48,7 +47,7 @@ RUN \
   tar -xzvf ruby-*.tar.gz && \
   rm -f ruby-*.tar.gz && \
   cd ruby-* && \
-  ./configure --disable-install-doc && \
+  ./configure --enable-shared --disable-install-doc && \
   make && \
   make install && \
   cd .. && \
@@ -69,8 +68,14 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # Define working directory.
 WORKDIR /usr/src/web
 
+# Add files.
+COPY entrypoint /usr/local/bin/middleman-docker-entrypoint
+
 # Define mountable directories.
 VOLUME ["/var/www/website"]
+
+# Define the entrypoint
+ENTRYPOINT ["/usr/local/bin/middleman-docker-entrypoint"]
 
 # Expose ports.
 EXPOSE 4567
