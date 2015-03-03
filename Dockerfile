@@ -84,7 +84,7 @@ EXPOSE 4567
 ONBUILD ADD Gemfile /usr/src/web/Gemfile
 ONBUILD ADD Gemfile.lock /usr/src/web/Gemfile.lock
 ONBUILD RUN echo "gem: --no-ri --no-rdoc" > .gemrc
-ONBUILD RUN bundle install --deployment
+ONBUILD RUN rm -rf .bundle && bundle install --deployment
 
 # Copy the rest of the application into place.
 ONBUILD ADD . /usr/src/web
