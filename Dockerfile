@@ -18,7 +18,6 @@ RUN apt-get update
 RUN apt-get -y install \
   build-essential \
   curl \
-  daemontools \
   git \
   imagemagick \
   libcurl4-openssl-dev \
