@@ -2,7 +2,6 @@
 
 # Prepare the bundle config if BUNDLE_PATH is provided in order to avoid
 # inconsistencies with how the bundler path is used
-BUNDLE_PATH=/usr/local/lib/bundle
 if ! [ -z "${BUNDLE_PATH}" ]; then mkdir -p .bundle && cat << EOF > ".bundle/config"; fi
 ---
 BUNDLE_PATH: '${BUNDLE_PATH}'
