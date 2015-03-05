@@ -1,11 +1,10 @@
 #
-# Middleman static website baseimage dockerfile
+# Middleman static website baseimage docker image
 #
 # http://github.com/tenstartups/middleman-docker
 #
 
-# Pull base image.
-FROM debian:jessie
+FROM ruby:latest
 
 MAINTAINER Marc Lennox <marc.lennox@gmail.com>
 
@@ -14,43 +13,18 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV TERM xterm-color
 
 # Install base packages.
-RUN apt-get update
-RUN apt-get -y install \
-  build-essential \
+RUN apt-get update && apt-get -y install \
   curl \
   git \
   imagemagick \
-  libcurl4-openssl-dev \
-  libreadline6-dev \
-  libssl-dev \
-  libxml2-dev \
-  libxslt1-dev \
-  libyaml-dev \
+  libffi-dev \
   nano \
-  python \
-  python-dev \
-  python-pip \
-  python-software-properties \
-  python-virtualenv \
   wget
 
 # Install nodejs from official source.
 RUN \
   curl -sL https://deb.nodesource.com/setup | bash - && \
   apt-get install -y nodejs
-
-# Compile ruby from source.
-RUN \
-  cd /tmp && \
-  wget http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-2.2.0.tar.gz && \
-  tar -xzvf ruby-*.tar.gz && \
-  rm -f ruby-*.tar.gz && \
-  cd ruby-* && \
-  ./configure --enable-shared --disable-install-doc && \
-  make && \
-  make install && \
-  cd .. && \
-  rm -rf ruby-*
 
 # Install ruby gems.
 RUN gem install \
