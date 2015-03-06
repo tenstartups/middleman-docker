@@ -9,8 +9,9 @@ FROM ruby:latest
 MAINTAINER Marc Lennox <marc.lennox@gmail.com>
 
 # Set environment.
-ENV DEBIAN_FRONTEND noninteractive
-ENV TERM xterm-color
+ENV \
+  DEBIAN_FRONTEND=noninteractive \
+  TERM=xterm-color
 
 # Install base packages.
 RUN apt-get update && apt-get -y install \
