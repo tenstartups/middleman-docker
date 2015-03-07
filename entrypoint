@@ -1,10 +1,20 @@
-#!/bin/bash
+#!/usr/bin/env ruby
+
+require 'awesome_print'
+require 'fileutils'
+require 'yaml'
 
 # Prepare the bundle config if BUNDLE_PATH is provided in order to avoid
 # inconsistencies with how the bundler path is used
-if ! [ -z "${BUNDLE_PATH}" ]; then mkdir -p .bundle && cat << EOF > ".bundle/config"; fi
----
-BUNDLE_PATH: '${BUNDLE_PATH}'
-EOF
+if ENV['BUNDLE_PATH']
+  config_file="./.bundle/config"
+  default_config = { 'BUNDLE_PATH' => ENV['BUNDLE_PATH'] }
+  current_config = File.exists?(config_file) ? YAML.load(File.open(config_file)) : {}
+  unless current_config['BUNDLE_PATH'] == default_config['BUNDLE_PATH']
+    current_config['BUNDLE_PATH'] = default_config['BUNDLE_PATH']
+    FileUtils.mkdir_p(File.dirname(config_file))
+    File.open(config_file, 'w'){|f| f.write(current_config.to_yaml)}
+  end
+end
 
-exec "$@"
+exec(*ARGV)
