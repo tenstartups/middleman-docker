@@ -40,16 +40,25 @@ RUN gem install \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Define working directory.
-WORKDIR /usr/src/web
+WORKDIR /opt/middleman
 
 # Add files.
-COPY entrypoint /usr/local/bin/middleman-docker-entrypoint
+ADD . /opt/middleman
+
+# Copy scripts and configuration into place.
+RUN \
+  mv ./entrypoint /usr/local/bin/docker-entrypoint && \
+  find ./script -regextype posix-extended -regex '^.+\.(rb|sh)\s*$' -exec bash -c 'f=`basename "{}"`; mv -v "{}" "/usr/local/bin/${f%.*}"' \; && \
+  rm -rf ./script
+
+# Define working directory.
+WORKDIR /usr/src/web
 
 # Define mountable directories.
 VOLUME ["/var/www/website"]
 
 # Define the entrypoint
-ENTRYPOINT ["/usr/local/bin/middleman-docker-entrypoint"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint"]
 
 # Expose ports.
 EXPOSE 4567
