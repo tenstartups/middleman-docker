@@ -18,7 +18,8 @@ RUN apt-get update && apt-get -y install \
   curl \
   git \
   imagemagick \
-  libffi-dev \
+  graphviz \
+  imagemagick \
   nano \
   wget
 
@@ -28,13 +29,13 @@ RUN \
   apt-get install -y nodejs
 
 # Install ruby gems.
-RUN gem install \
+RUN gem install --no-ri --no-rdoc \
   awesome_print \
   bundler \
   middleman \
   middleman-livereload \
-  rubygems-update \
-  --no-ri --no-rdoc
+  ruby-graphviz \
+  rubygems-update
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
