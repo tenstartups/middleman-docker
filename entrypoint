@@ -1,20 +1,21 @@
 #!/usr/bin/env ruby
 
-require 'awesome_print'
 require 'fileutils'
 require 'yaml'
 
 # Prepare the bundle config if BUNDLE_PATH is provided in order to avoid
 # inconsistencies with how the bundler path is used
 if ENV['BUNDLE_PATH']
-  config_file="./.bundle/config"
+  bundle_config_dir = ENV['BUNDLE_APP_CONFIG'] || './.bundle'
+  config_file = File.join(bundle_config_dir, 'config')
   default_config = { 'BUNDLE_PATH' => ENV['BUNDLE_PATH'] }
   current_config = File.exists?(config_file) ? YAML.load(File.open(config_file)) : {}
   unless current_config['BUNDLE_PATH'] == default_config['BUNDLE_PATH']
     current_config['BUNDLE_PATH'] = default_config['BUNDLE_PATH']
-    FileUtils.mkdir_p(File.dirname(config_file))
-    File.open(config_file, 'w'){|f| f.write(current_config.to_yaml)}
+    FileUtils.mkdir_p(bundle_config_dir)
+    File.open(config_file, 'w') { |f| f.write(current_config.to_yaml) }
   end
 end
 
-exec(*ARGV)
+# Execute the passed in command if provided
+exec(*ARGV) if ARGV.size > 0
