@@ -41,10 +41,10 @@ RUN gem install --no-ri --no-rdoc \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Define working directory.
-WORKDIR /opt/middleman
+WORKDIR /home/middleman
 
 # Add files.
-ADD . /opt/middleman
+ADD . /home/middleman
 
 # Copy scripts and configuration into place.
 RUN \
@@ -79,5 +79,5 @@ ONBUILD RUN bundle exec middleman build
 # Dump out the git revision.
 ONBUILD RUN \
   mkdir -p ./.git/objects && \
-  echo "$(git rev-parse HEAD)" > ./build-info.txt && \
+  echo "$(git rev-parse HEAD)" > ./REVISION && \
   rm -rf ./.git
