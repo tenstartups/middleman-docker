@@ -55,9 +55,6 @@ RUN \
 # Define working directory.
 WORKDIR /usr/src/web
 
-# Define mountable directories.
-VOLUME ["/usr/src/web"]
-
 # Define the entrypoint
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint"]
 
