@@ -11,7 +11,8 @@ MAINTAINER Marc Lennox <marc.lennox@gmail.com>
 # Set environment.
 ENV \
   DEBIAN_FRONTEND=noninteractive \
-  TERM=xterm-color
+  TERM=xterm-color \
+  HOME=/home/middleman
 
 # Install base packages.
 RUN apt-get update && apt-get -y install \
@@ -48,15 +49,16 @@ ADD . /home/middleman
 
 # Copy scripts and configuration into place.
 RUN \
-  mv ./entrypoint /usr/local/bin/docker-entrypoint && \
-  find ./script -regextype posix-extended -regex '^.+\.(rb|sh)\s*$' -exec bash -c 'f=`basename "{}"`; mv -v "{}" "/usr/local/bin/${f%.*}"' \; && \
+  cp ./entrypoint /usr/local/bin/docker-entrypoint && \
+  find ./script -type f -name '*.sh' | while read f; do echo 'n' | cp -iv "$f" "/usr/local/bin/`basename ${f%.sh}`" 2>/dev/null; done && \
+  find ./script -type f -name '*.rb' | while read f; do echo 'n' | cp -iv "$f" "/usr/local/bin/`basename ${f%.rb}`" 2>/dev/null; done && \
   rm -rf ./script
 
 # Define working directory.
 WORKDIR /usr/src/web
 
 # Define the entrypoint
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint"]
+ENTRYPOINT ["/home/middleman/entrypoint"]
 
 # Expose ports.
 EXPOSE 4567
