@@ -31,12 +31,9 @@ RUN \
 
 # Install ruby gems.
 RUN gem install --no-ri --no-rdoc \
-  awesome_print \
   bundler \
   middleman \
-  middleman-livereload \
-  ruby-graphviz \
-  rubygems-update
+  middleman-livereload
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -45,20 +42,14 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 WORKDIR /home/middleman
 
 # Add files.
-ADD . /home/middleman
-
-# Copy scripts and configuration into place.
-RUN \
-  cp ./entrypoint /usr/local/bin/docker-entrypoint && \
-  find ./script -type f -name '*.sh' | while read f; do echo 'n' | cp -iv "$f" "/usr/local/bin/`basename ${f%.sh}`" 2>/dev/null; done && \
-  find ./script -type f -name '*.rb' | while read f; do echo 'n' | cp -iv "$f" "/usr/local/bin/`basename ${f%.rb}`" 2>/dev/null; done && \
-  rm -rf ./script
+COPY entrypoint.rb /entrypoint
+COPY bundle-delete.sh /usr/local/bin/bundle-delete
 
 # Define working directory.
 WORKDIR /usr/src/web
 
 # Define the entrypoint
-ENTRYPOINT ["/home/middleman/entrypoint"]
+ENTRYPOINT ["/entrypoint"]
 
 # Expose ports.
 EXPOSE 4567
