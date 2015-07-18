@@ -33,8 +33,8 @@ if ENV['BUNDLE_PATH']
 end
 
 # Execute an application specific entrypoint if present
-docker_entrypoint = Dir['./docker-entrypoint*', './entrypoint*'].select{ |f| f.executable? }.first
-ARGV.unshift(docker_entrypoint) if File.exist?(docker_entrypoint)
+docker_entrypoint = Dir['./docker-entrypoint*', './entrypoint*'].select{ |f| File.executable?(f) }.first
+ARGV.unshift(docker_entrypoint) if docker_entrypoint && File.exist?(docker_entrypoint)
 
 # Execute the passed in command if provided
 exec(*ARGV) if ARGV.size > 0
