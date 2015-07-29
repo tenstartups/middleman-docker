@@ -22,6 +22,7 @@ RUN apt-get update && apt-get -y install \
   graphviz \
   imagemagick \
   nano \
+  rsync \
   wget
 
 # Install nodejs from official source.
