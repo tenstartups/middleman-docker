@@ -17,7 +17,6 @@ ENV \
 # Install base packages.
 RUN apt-get update && apt-get -y install \
   curl \
-  git \
   graphviz \
   imagemagick \
   nano \
@@ -67,7 +66,8 @@ ONBUILD ADD . /usr/src/web
 ONBUILD RUN bundle exec middleman build
 
 # Dump out the git revision.
+ONBUILD COPY .git/HEAD .git/HEAD
+ONBUILD COPY .git/refs/heads .git/refs/heads
 ONBUILD RUN \
-  mkdir -p ./.git/objects && \
-  echo "$(git rev-parse HEAD)" > ./REVISION && \
+  cat ".git/$(cat .git/HEAD 2>/dev/null | sed -E 's/ref: (.+)/\1/')" 2>/dev/null > ./REVISION && \
   rm -rf ./.git
