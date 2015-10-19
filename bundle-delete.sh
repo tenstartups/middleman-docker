@@ -7,11 +7,11 @@ DELETE_GLOB="$1"
 
 # Exit for missing environment
 if [ -z "${DELETE_GLOB}" ]; then
-  echo "You must supply a bundle glob with the DELETE_GLOB environment variable or the first argument."
+  echo >&2 "You must supply a bundle glob with the DELETE_GLOB environment variable or the first argument."
   exit 1
 fi
 if [ -z "${BUNDLE_PATH}" ]; then
-  echo "You must supply the BUNDLE_PATH environment variable where bundler gems are stored."
+  echo >&2 "You must supply the BUNDLE_PATH environment variable where bundler gems are stored."
   exit 1
 fi
 
