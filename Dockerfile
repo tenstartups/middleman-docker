@@ -41,14 +41,14 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 WORKDIR /home/middleman
 
 # Add files.
-COPY entrypoint.rb /entrypoint
+COPY entrypoint.rb /docker-entrypoint
 COPY bundle-delete.sh /usr/local/bin/bundle-delete
 
 # Define working directory.
 WORKDIR /usr/src/web
 
 # Define the entrypoint
-ENTRYPOINT ["/entrypoint"]
+ENTRYPOINT ["/docker-entrypoint"]
 
 # Expose ports.
 EXPOSE 4567
