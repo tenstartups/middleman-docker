@@ -11,8 +11,7 @@ MAINTAINER Marc Lennox <marc.lennox@gmail.com>
 # Set environment.
 ENV \
   DEBIAN_FRONTEND=noninteractive \
-  TERM=xterm-color \
-  HOME=/home/middleman
+  TERM=xterm-color
 
 # Install base packages.
 RUN apt-get update && apt-get -y install \
@@ -36,9 +35,6 @@ RUN gem install --no-ri --no-rdoc \
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Define working directory.
-WORKDIR /home/middleman
 
 # Add files.
 COPY entrypoint.rb /docker-entrypoint
