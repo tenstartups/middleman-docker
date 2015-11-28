@@ -24,8 +24,7 @@ WORKDIR ${HOME}
 # Install ruby gems.
 RUN \
   echo "gem: --no-ri --no-rdoc" > ${HOME}/.gemrc && \
-  gem install nokogiri -- --use-system-libraries && \
-  gem install bundler json middleman middleman-livereload minitest
+  gem install bundler json middleman middleman-livereload minitest -- --use-system-libraries
 
 # Add files.
 COPY entrypoint.rb /docker-entrypoint
