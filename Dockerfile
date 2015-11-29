@@ -23,7 +23,6 @@ WORKDIR ${HOME}
 
 # Install ruby gems.
 RUN \
-  echo "gem: --no-ri --no-rdoc" > ${HOME}/.gemrc && \
   gem install bundler json middleman middleman-livereload minitest -- --use-system-libraries
 
 # Add files.
