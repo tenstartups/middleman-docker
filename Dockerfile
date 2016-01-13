@@ -23,7 +23,8 @@ WORKDIR ${HOME}
 
 # Install ruby gems.
 RUN \
-  gem install bundler json middleman middleman-livereload minitest -- --use-system-libraries
+  echo "gem: --no-ri --no-rdoc" > ${HOME}/.gemrc && \
+  gem install --no-ri --no-rdoc bundler
 
 # Add files.
 COPY entrypoint.rb /docker-entrypoint
