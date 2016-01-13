@@ -15,7 +15,7 @@ ENV \
 
 # Install base packages.
 RUN \
-  apk --update add graphviz imagemagick libffi-dev libxml2-dev libxslt-dev nodejs rsync && \
+  apk --update add graphviz imagemagick libffi-dev libxml2-dev libxslt-dev nodejs openssl-dev rsync && \
   rm -rf /var/cache/apk/*
 
 # Define working directory.
