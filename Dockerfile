@@ -4,7 +4,7 @@
 # http://github.com/tenstartups/middleman-docker
 #
 
-FROM tenstartups/alpine-ruby:latest
+FROM tenstartups/alpine:latest
 
 MAINTAINER Marc Lennox <marc.lennox@gmail.com>
 
@@ -15,7 +15,10 @@ ENV \
 
 # Install base packages.
 RUN \
-  apk --update add graphviz imagemagick libffi-dev libxml2-dev libxslt-dev nodejs openssl-dev rsync && \
+  apk --update add build-base git graphviz libffi-dev libxml2-dev libxslt-dev \
+               nodejs openssl-dev rsync ruby ruby-bigdecimal ruby-bundler \
+               ruby-dev ruby-io-console ruby-irb ruby-json ruby-nokogiri \
+               zlib-dev && \
   rm -rf /var/cache/apk/*
 
 # Define working directory.
@@ -23,8 +26,8 @@ WORKDIR ${HOME}
 
 # Install ruby gems.
 RUN \
-  echo "gem: --no-ri --no-rdoc" > ${HOME}/.gemrc && \
-  gem install --no-ri --no-rdoc bundler
+  echo "gem: --no-document" > ${HOME}/.gemrc && \
+  gem install bundler --no-document
 
 # Add files.
 COPY entrypoint.rb /docker-entrypoint
