@@ -17,8 +17,7 @@ ENV \
 RUN \
   apk --update add build-base git graphviz libffi-dev libxml2-dev libxslt-dev \
                nodejs openssl-dev rsync ruby ruby-bigdecimal ruby-bundler \
-               ruby-dev ruby-io-console ruby-irb ruby-json ruby-nokogiri \
-               zlib-dev && \
+               ruby-dev ruby-io-console ruby-irb ruby-json zlib-dev && \
   rm -rf /var/cache/apk/*
 
 # Define working directory.
